@@ -1,0 +1,295 @@
+{{welcomeText}}
+<div class="container" id="main-container">
+    <div class="content contact-list">
+        <div *ngIf="membersList" class="card card-default">
+            <div class="card-header align-items-center px-3 px-md-5">
+                <h2> Liste des membres {{membersList.length}}</h2>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMemberModal">Ajouter un membre</button>
+            </div>
+
+            <div class="card-body px-3 px-md-5" >
+                <div class="row">
+                    <div *ngFor="let member of membersList" class="col-lg-6 col-xl-4 col-md-6 col-sm-12">
+                        <div class="card card-default p-4">
+                            <a href="javascript:0" class="media text-secondary" data-toggle="modal" (click)="onOpenModal(member, 'read')">
+                                <img src="/assets/img/avatar3.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                <div class="media-body">
+                                    <h5 class="mt-0 mb-2 text-dark">Full name: {{member.firstName}}</h5>
+                                    <ul class="list-unstyled text-smoke text-smoke">
+                                        <li class="d-flex">Phone number:
+                                            <i class="mdi mdi-phone mr-1"></i>
+                                            <span>{{member.phoneNumber}}</span>
+                                        </li>
+                                        <li class="d-flex">Sex:
+                                            <i class="mdi mdi-sex mr-1"></i>
+                                            <span>{{member.sex}}</span>
+                                        </li>
+                                        <li class="d-flex">Type:
+                                            <i class="mdi mdi-type mr-1"></i>
+                                            <span>{{member.type}}</span>
+                                        </li>
+                                        <li class="d-flex">Fonction:
+                                            <i class="mdi mdi-function mr-1"></i>
+                                            <span>{{member.function}}</span>
+                                        </li>
+                                        <li class="d-flex">Date d'adhesion:
+                                            <i class="mdi mdi-phone mr-1"></i>
+                                            <!-- <span>{{member.joinDate | date }}</span> -->
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+                            </a>
+                            <div class="card-body">
+                                <div class="float-right btn-group btn-group-sm">
+                                   <a (click)="onOpenModal(member, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                                   <a (click)="onOpenModal(member, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div *ngIf="editMember" class="modal fade" id="updateMemberModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateMemberModalLabel">Modification membre: {{editMember.lastName}}</h5>
+                    <button type="button" class="Fermer" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #editForm="ngForm">
+                        <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" [(ngModel)]="editMember.lastName" name="lastName" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Nom">
+                        </div>
+                        <input type="hidden" [(ngModel)]="editMember.id" name="_id" class="form-control" id="_id" placeholder="ID">
+                        <input type="hidden"  [(ngModel)]="editMember.phoneNumber" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone">
+                        <div class="form-group">
+                        <div class="form-group">
+                            <label for="phone">First Name</label>
+                            <input type="text" [(ngModel)]="editMember.firstName" name="firstName" class="form-control" id="firstName" placeholder="Prenom">
+                        </div>
+                        <label for="email">Phone Number</label>
+                        <input type="email" [(ngModel)]="editMember.phoneNumber" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone">
+                        </div>
+                        <div class="form-group">
+                            <label for="adresse">Function</label> 
+                            <select class="form-select" aria-label="Default select example" [(ngModel)]="editMember.function">
+                                <option selected>--Please choose--</option>
+                                <option value="M">Masculin</option>
+                                <option value="F">Feminin</option>
+                                <option value="O">Autres</option>
+                              </select>
+                            <!-- <input type="text" [(ngModel)]="editMember.adresse" name="adresse" class="form-control" id="adresse" placeholder="Adresse"> -->
+                        </div>
+                        <input type="text" [(ngModel)]="editMember.sex" name="telephone" class="form-control" id="telephone" placeholder="Telephone">
+                        <div class="form-group">
+                            <label for="adresse">Type</label> 
+                            <select class="form-select" aria-label="Default select example" [(ngModel)]="editMember.type">
+                                <option selected>--Please choose--</option>
+                                <option value="simple">Membre simple</option>
+                                <option value="bureau">Membre du bureau</option>
+                              </select>
+                            <!-- <input type="text" [(ngModel)]="editMember.adresse" name="adresse" class="form-control" id="adresse" placeholder="Adresse"> -->
+                        </div>
+                        <div class="form-group">
+                            <label for="adresse">Function</label> 
+                            <select class="form-select" aria-label="Default select example" [(ngModel)]="editMember.function">
+                                <option selected>--Please choose--</option>
+                                <option value="president">President</option>
+                                <option value="adjoint">Adjoint</option>
+                                <option value="membre">Adjoint</option>
+                              </select>
+                            <!-- <input type="text" [(ngModel)]="editMember.adresse" name="adresse" class="form-control" id="adresse" placeholder="Adresse"> -->
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="memberCard" id="memberCard" [(ngModel)]="editMember.memberCard" checked disabled>
+                            <label class="form-check-label" for="memberCard"> (Nouveau) membre
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="memberCard" id="flexRadioCheckedDisabled" [(ngModel)]="editMember.function" disabled>
+                            <label class="form-check-label" for="flexRadioCheckedDisabled">
+                              Ancien membre
+                            </label>
+                          </div>
+                        <!-- <div class="form-group">
+                        <label for="phone">Image URL</label>
+                        <input type="text" [(ngModel)]="editMember.email" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
+                        </div> -->
+                        <div class="modal-footer">
+                        <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                        <button  (click)="onUpdateMember(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- Add member Modal -->
+        <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addmemberModalLabel">Edition membre {{editMember.lastName}}</h5>
+                    <button type="button" class="Fermer" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #addForm="ngForm" (ngSubmit)="onAddMember(addForm)">
+                        <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" ngModel name="lastName" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder="Nom">
+                        </div>
+                        <input type="hidden" ngModel name="id" class="form-control" id="id" placeholder="ID">
+                        <input type="hidden" ngModel name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone">
+                        <div class="form-group">
+                        <div class="form-group">
+                            <label for="firstName">Prenom</label>
+                            <input type="text" ngModel name="firstName" class="form-control" id="firstName" placeholder="Prenom">
+                        </div>
+                        <label for="phoneNumber">Telephone</label>
+                        <input type="text" ngModel name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone">
+                        </div>
+                        <div class="form-group">
+                        <label for="sex">Sex</label> 
+                            <select class="form-select" aria-label="Default select example" ngModel name="sex">
+                                <option selected>--Please choose--</option>
+                                <option value="M">Masculin</option>
+                                <option value="F">Feminin</option>
+                                <option value="O">Autres</option>
+                              </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Type</label> 
+                            <input type="text" ngModel name="type" class="form-control" id="type" placeholder="Type">
+                        </div>
+                        <div class="form-group">
+                            <label for="function">Function</label> 
+                            <input type="text" ngModel name="function" class="form-control" id="function" placeholder="Fonction">
+                        </div>
+                        <div class="form-group">
+                            <label for="function">Date d'adhesion</label> 
+                            <input type="date" ngModel name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion">
+                        </div>
+                        <!-- <div class="form-group">
+                        <label for="phone">Image URL</label>
+                        <input type="text" [(ngModel)]="editMember.email" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
+                        </div> -->
+                        <div class="modal-footer">
+                        <button type="button" id="add-member-form" data-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                        <button  [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- member Modal -->
+        <div class="modal fade" id="readMemberModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-end border-bottom-0">
+                        <button type="button" class="btn-edit-icon" data-dismiss="modal" aria-label="Fermer">
+                            <i class="mdi mdi-pencil"></i>
+                        </button>
+
+                        <div class="dropdown">
+                            <button class="btn-dots-icon" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-dots-vertical"></i>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="javascript:void(0)">Action</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Autre action</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Autre chose</a>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-Fermer-icon" data-dismiss="modal" aria-label="Fermer">
+                            <i class="mdi mdi-Fermer"></i>
+                        </button>
+                    </div>
+
+                    <div class="modal-body pt-0">
+                        <div class="row no-gutters">
+                            <div class="col-md-6">
+                                <div class="profile-content-left px-4">
+                                    <div class="card text-center px-0 border-0">
+                                        <div class="card-img mx-auto">
+                                            <img class="rounded-circle" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="user image" />
+                                        </div>
+
+                                        <div class="card-body">
+                                            <p>{{readMember.phoneNumber}}</p>
+                                            <a class="btn btn-primary btn-pill btn-lg my-4" href="javascript:void(0)">Suivre</a>
+                                        </div>
+                    
+                                    </div>   
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="contact-info px-4">
+                                    <h4 class="mb-1">Details du membre</h4>
+                                    <p class="text-dark font-weight-medium pt-4 mb-2">Nom </p>
+                                    <p>{{readMember.lastName}} {{readMember.firstName}}</p>
+                                    <p class="text-dark font-weight-medium pt-4 mb-2">Telephone </p>
+                                    <p>{{readMember.phoneNumber}}</p>
+                                    <p class="text-dark font-weight-medium pt-4 mb-2">Sex</p>
+                                    <p>{{readMember.sex}}</p>
+                                    <p class="text-dark font-weight-medium pt-4 mb-2">Type</p>
+                                    <p>{{readMember.type}}</p>
+                                    <p class="text-dark font-weight-medium pt-4 mb-2">Function</p>
+                                    <p>{{readMember.function}}</p>
+                                    <p class="text-dark font-weight-medium pt-4 mb-2">Date d'adhesion</p>
+                                    <!-- <p>{{readMember.joinDate}}</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div *ngIf="deleteMember" class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Delete Employee</h5>
+                    <button type="button" class="Fermer" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete member {{deleteMember.firstName}} {{deleteMember.lastName}}?</p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button (click)="onDeleteMember(deleteMember.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                    </div> 
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- Notification for no members -->
+        <div *ngIf="membersList.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">No member found!</h4>
+                    <p>Aucun member trouve.</p>
+            
+            </div>
+        </div>
+</div>

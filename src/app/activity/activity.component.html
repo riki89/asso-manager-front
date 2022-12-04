@@ -1,0 +1,31 @@
+<div *ngFor="let activity of data" class="col-lg-6 col-xl-4 col-md-6 col-sm-12">
+    <div class="card card-default p-4">
+        <a href="javascript:0" class="media text-secondary" data-toggle="modal" (click)="onOpenModal(activity, 'read')">
+            <img src="/assets/img/avatar3.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+            <div class="media-body">
+                <h5 class="mt-0 mb-2 text-dark">Activity: {{activity.lieu}}</h5>
+                <ul class="list-unstyled text-smoke text-smoke">
+                    <li class="d-flex">ID:
+                        <i class="mdi mdi-phone mr-1"></i>
+                        <span>{{activity.id}}</span> 
+                    </li>
+                    <li class="d-flex">Date:
+                        <i class="mdi mdi-sex mr-1"></i>
+                        <span>{{activity.date | date: 'short'}}</span>
+                    </li>
+                    <li class="d-flex">Lieu:
+                        <i class="mdi mdi-type mr-1"></i>
+                        <span>{{activity.lieu}}</span>
+                    </li>
+                </ul>
+                
+            </div>
+        </a>
+        <div class="card-body">
+            <div class="float-right btn-group btn-group-sm">
+               <a (click)="onOpenModal(activity, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+               <a (click)="onOpenModal(activity, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+            </div>
+         </div>
+    </div>
+</div>

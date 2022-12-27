@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Member } from '../models/models';
 
 @Injectable({
@@ -11,12 +12,14 @@ export class MembersService {
 
   constructor(private http: HttpClient) { }
 
+  public getMembers(): Observable<any> {
+    const url:string = this.apiBaseUrl+"/members";
+    return this.http.get(url);
+  }
   public get(): Promise<Member[]> {
     const url:string = this.apiBaseUrl+"/members";
     return this.http.get(url).toPromise()
-        .then(response => { response as Member[];
-           console.log("result: ", response);
-        })
+        .then(response => { response as Member[];})
         .catch(this.handleError);
   }
 

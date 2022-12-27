@@ -14,7 +14,7 @@ export class Member {
   lastName!:string;
   firstName!:string;
   phoneNumber!:string
-  sex!:string;
+  sex!:SEXE;
   type!:string;
   function!:string;
   joinDate!:string;
@@ -26,4 +26,9 @@ export class Activity {
   id!:number;
   date:Date = new Date();
   lieu!:string;
+}
+
+export enum SEXE {
+  F = 'Feminin',
+  M = 'Masculin'
 }

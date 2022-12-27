@@ -18,10 +18,8 @@ export class ActivityComponent implements OnInit {
   }
 
   getActivities():void {
-    console.log("called!");
     //this.activityService.getActivity(1).then({});
-    this.activityService.get().then( response => console.log("res: ", response)
-    );
+    //this.activityService.get().then( response => console.log("res: ", response));
     this.data = [
       {
         id: 1, 

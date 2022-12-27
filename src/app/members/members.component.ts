@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Member } from '../models/models';
+import { Member, SEXE } from '../models/models';
 import { MembersService } from '../services/members.service';
 
 @Component({
@@ -9,51 +9,34 @@ import { MembersService } from '../services/members.service';
   styleUrls: ['./members.component.css']
 })
 export class MembersComponent implements OnInit {
-  public membersList!: Member[];
+  membersList: Member[] = [];
   editMember!: Member;
   deleteMember!: Member;
   readMember!: Member;
+  SEX: SEXE = SEXE.M;
+  imgF:string = '/assets/img/avatar3.png';
+  imgM:string = '/assets/img/avatar2.png';
   welcomeText = "Welcome Yahia";
 
   constructor(private memberService: MembersService) { }
 
   ngOnInit(): void {
     this.getMembers();
-    console.log(this.membersList);
+    console.log(this.SEX[0]);
+    
+    this.editMember = this.membersList[0];
+    this.deleteMember = this.membersList[1];
+    this.readMember = this.membersList[0];
   }
 
+
+
   public getMembers(): void {
-    this.membersList = [
-      {
-          "id": 1,
-          "lastName": "Diallo",
-          "firstName": "Khady",
-          "phoneNumber": "8329169960",
-          "sex": "F",
-          "type": "simple",
-          "function": "GENDARME",
-          "joinDate": "01/01/2019",
-          "memberCard": false
-      },
-      {
-          "id": 2,
-          "lastName": "Diallo",
-          "firstName": "Yahia",
-          "phoneNumber": "8329169960",
-          "sex": "M",
-          "type": "simple",
-          "function": "finance",
-          "joinDate": "01/01/2019",
-          "memberCard": false
+    this.memberService.getMembers().subscribe(
+      data => {
+        this.membersList = data;
       }
-  ];
-    this.memberService.get()
-      .then(foundMembers => {
-        
-        //if (foundMembers) this.membersList = foundMembers;
-        //else console.log("No members found!");
-        
-      });
+    )
   }
 
   public onAddMember(addForm: NgForm): void {
@@ -120,5 +103,14 @@ export class MembersComponent implements OnInit {
     }
     container?.appendChild(button);
     button.click();
+  }
+
+  public getSex(sexe:SEXE):string {
+    switch(sexe){
+      case SEXE.M: return 'Masculin';
+      break;
+      case SEXE.F: return 'Feminin';
+      break; 
+    };
   }
 }

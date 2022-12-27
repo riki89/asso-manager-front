@@ -15,7 +15,7 @@ export class ActivityService {
     const url:string = this.apiBaseUrl+"/activity";
     return this.http.get(url).toPromise()
         .then(response => { response as Activity[];
-          console.log("response: ",response);
+          //console.log("response: ",response);
         })
         .catch(this.handleError);
   }

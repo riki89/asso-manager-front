@@ -12,17 +12,8 @@ export class ActivityService {
 
   constructor(private http: HttpClient) { }
 
-  // public get(): Promise<Activity[]> {
-  //   const url:string = this.apiBaseUrl+"/activity";
-  //   return this.http.get(url).toPromise()
-  //       .then(response => { response as Activity[];
-  //         //console.log("response: ",response);
-  //       })
-  //       .catch(this.handleError);
-  // }
-
   public get(): Observable<any> {
-    const url:string = this.apiBaseUrl+"/members";
+    const url:string = this.apiBaseUrl+"/activity";
     return this.http.get(url);
   }
 

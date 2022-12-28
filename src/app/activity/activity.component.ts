@@ -8,7 +8,7 @@ import { ActivityService } from '../services/activity.service';
 })
 export class ActivityComponent implements OnInit {
 
-  data: Array<any> = [];
+  list!: Activity[];
 
   constructor(private activityService:ActivityService) {}
 
@@ -19,19 +19,9 @@ export class ActivityComponent implements OnInit {
 
   getActivities():void {
     //this.activityService.getActivity(1).then({});
-    //this.activityService.get().then( response => console.log("res: ", response));
-    this.data = [
-      {
-        id: 1, 
-        date: new Date("01/01/2022"),
-        lieu: "Medina"
-      },
-      {
-        id: 2, 
-        date: new Date("01/04/2022"),
-        lieu: "Yembeul"
-      }
-    ];
+    this.activityService.get().subscribe( response => {
+      this.list = response;
+    });
   }
 
   public onOpenModal(activity: Activity, mode: string): void {
@@ -67,6 +57,7 @@ export class ActivityComponent implements OnInit {
 
 export class Activity {
   id!:number;
+  type!:string;
   date:Date = new Date();
   lieu!:string;
 } 

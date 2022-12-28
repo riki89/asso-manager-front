@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Activity } from '../models/models';
 
 @Injectable({
@@ -11,13 +12,9 @@ export class ActivityService {
 
   constructor(private http: HttpClient) { }
 
-  public get(): Promise<Activity[]> {
+  public get(): Observable<any> {
     const url:string = this.apiBaseUrl+"/activity";
-    return this.http.get(url).toPromise()
-        .then(response => { response as Activity[];
-          //console.log("response: ",response);
-        })
-        .catch(this.handleError);
+    return this.http.get(url);
   }
 
   private handleError(err: any): Promise<any>{

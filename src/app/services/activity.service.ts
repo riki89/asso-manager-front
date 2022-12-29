@@ -17,23 +17,25 @@ export class ActivityService {
     return this.http.get(url);
   }
 
-  public addActivity(candidat:Activity): Promise<Activity> {
-    const url:string = this.apiBaseUrl+"/candidat";
-    return this.http.post(url, candidat).toPromise()
+  public addActivity(activity:Activity): Promise<Activity> {
+    const url:string = this.apiBaseUrl+"/activity";
+    return this.http.post(url, activity).toPromise()
         .then(response => response as Activity)
         .catch(this.handleError);
   }
 
-  public deleteActivity(candidatId:number): Promise<void> {
-    const url:string = this.apiBaseUrl+"/candidat/"+candidatId;
+  public deleteActivity(activityId:number): Promise<void> {
+    const url:string = this.apiBaseUrl+"/activity/"+activityId;
     return this.http.delete(url).toPromise()
         .then(response => response as Activity)
         .catch(this.handleError);
   }
 
-  public updateActivity(candidat:Activity): Promise<Activity> {
-    const url:string = this.apiBaseUrl+"/candidat/"+candidat.id;
-    return this.http.put(url, candidat).toPromise()
+  public updateActivity(activity:Activity): Promise<Activity> {
+    console.log(activity);
+    
+    const url:string = this.apiBaseUrl+"/activity/"+activity.id;
+    return this.http.put(url, activity).toPromise()
         .then(response => response as Activity)
         .catch(this.handleError);
   }

@@ -67,25 +67,25 @@ export class ActivityComponent implements OnInit {
     const button = document.createElement('button');
     button.type = 'button';
     button.style.display = 'none';
-    button.setAttribute('data-toggle', 'modal');
+    button.setAttribute('data-bs-toggle', 'modal');
     if (mode === 'add') {
-      button.setAttribute('data-target', '#addActivityModal');
+      button.setAttribute('data-bs-target', '#addActivityModal');
     }
     if (mode === 'edit') {
       this.editActivity = activity;
-      button.setAttribute('data-target', '#updateActivityModal');
-      console.log(button.getAttribute('data-target'));
+      button.setAttribute('data-bs-target', '#updateActivityModal');
+      console.log(button.getAttribute('data-bs-target'));
       
     }
     if (mode === 'delete') {
       this.deleteActivity = activity;
-      button.setAttribute('data-target', '#deleteActivityModal');
+      button.setAttribute('data-bs-target', '#deleteActivityModal');
     }
     if (mode === 'read') {
       this.readActivity = activity;
-      console.log(this.readActivity);
+      console.log(this.readActivity, " mode: ", mode);
       
-      button.setAttribute('data-target', '#readActivityModal');
+      button.setAttribute('data-bs-target', '#readActivityModal');
     }
     container?.appendChild(button);
     button.click();

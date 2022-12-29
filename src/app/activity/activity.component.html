@@ -4,7 +4,7 @@
             <div class="card-header align-items-center px-3 px-md-5">
                 <h2> Liste des activites {{activitysList.length}}</h2>
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActivityModal">Ajouter une activite</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addActivityModal">Ajouter une activite</button>
             </div>
             <div class="card-body px-3 px-md-5" >
                 <div class="row">
@@ -37,6 +37,9 @@
                             </a>
                             <div class="card-body">
                                 <div class="float-right btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#readActivityModal">
+                                        Launch demo modal
+                                      </button>
                                 <a (click)="onOpenModal(activity, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
                                 <a (click)="onOpenModal(activity, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
                                 </div>
@@ -137,7 +140,7 @@
     </div>
 
     <!-- Activity Modal -->
-    <div class="modal fade" id="readActivityModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="readActivityModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header justify-content-end border-bottom-0">
@@ -198,8 +201,34 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
+    <div class="modal fade" id="readActivityModal" tabindex="-1" aria-labelledby="readActivityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="readActivityModalLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-6">
+                <div class="contact-info px-4">
+                    <h4 class="mb-1">Details de activite de la date {{readActivity?.date}}</h4>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Type </p>
+                    <p>{{readActivity?.type}}</p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Date </p>
+                    <p>{{readActivity?.date}}</p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Lieu</p>
+                    <p>{{readActivity?.lieu}}</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
     <!-- Delete Modal -->
     <div class="modal fade" id="deleteActivityModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

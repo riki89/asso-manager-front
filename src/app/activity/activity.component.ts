@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Activity } from '../models/models';
 import { ActivityService } from '../services/activity.service';
 
 @Component({
@@ -8,7 +10,10 @@ import { ActivityService } from '../services/activity.service';
 })
 export class ActivityComponent implements OnInit {
 
-  list!: Activity[];
+  activitysList!: Activity[];
+  editActivity!: Activity;
+  deleteActivity!: Activity;
+  readActivity!: Activity;
 
   constructor(private activityService:ActivityService) {}
 
@@ -20,8 +25,41 @@ export class ActivityComponent implements OnInit {
   getActivities():void {
     //this.activityService.getActivity(1).then({});
     this.activityService.get().subscribe( response => {
-      this.list = response;
+      this.activitysList = response;
     });
+  }
+
+  public onAddActivity(addForm: NgForm): void {
+    const form = document.getElementById('add-activity-form');
+    form?.click();
+    //console.log(addForm.value);
+    this.activityService.addActivity(addForm.value);
+    //window.location.reload();
+  }
+
+  public onUpdateActivity(activity: Activity): void {
+    this.activityService.updateActivity(activity);
+    //window.location.reload();
+  }
+
+  public onDeleteActivity(activityId: number): void {
+    this.activityService.deleteActivity(activityId);
+    //window.location.reload();
+  }
+
+  public searchActivitys(key: string): void {
+    console.log(key);
+    const results: Activity[] = [];
+    for (const activity of this.activitysList) {
+      if (activity.type.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || activity.lieu.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        results.push(activity);
+      }
+    }
+    this.activitysList = results;
+    if (results.length === 0 || !key) {
+      this.getActivities();
+    }
   }
 
   public onOpenModal(activity: Activity, mode: string): void {
@@ -31,33 +69,27 @@ export class ActivityComponent implements OnInit {
     button.style.display = 'none';
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
-      button.setAttribute('data-target', '#addMemberModal');
+      button.setAttribute('data-target', '#addActivityModal');
     }
     if (mode === 'edit') {
-     // this.edit = Member;
-      button.setAttribute('data-target', '#updateMemberModal');
+      this.editActivity = activity;
+      button.setAttribute('data-target', '#updateActivityModal');
       console.log(button.getAttribute('data-target'));
       
     }
     if (mode === 'delete') {
-      //this.deleteMember = Member;
-      button.setAttribute('data-target', '#deleteMemberModal');
+      this.deleteActivity = activity;
+      button.setAttribute('data-target', '#deleteActivityModal');
     }
     if (mode === 'read') {
-      //this.readMember = Member;
-      //console.log(this.readMember);
+      this.readActivity = activity;
+      console.log(this.readActivity);
       
-      button.setAttribute('data-target', '#readMemberModal');
+      button.setAttribute('data-target', '#readActivityModal');
     }
     container?.appendChild(button);
     button.click();
+    
   }
 
 }
-
-export class Activity {
-  id!:number;
-  type!:string;
-  date:Date = new Date();
-  lieu!:string;
-} 

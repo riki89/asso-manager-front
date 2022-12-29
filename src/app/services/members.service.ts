@@ -16,12 +16,12 @@ export class MembersService {
     const url:string = this.apiBaseUrl+"/members";
     return this.http.get(url);
   }
-  public get(): Promise<Member[]> {
-    const url:string = this.apiBaseUrl+"/members";
-    return this.http.get(url).toPromise()
-        .then(response => { response as Member[];})
-        .catch(this.handleError);
-  }
+  // public get(): Promise<Member[]> {
+  //   const url:string = this.apiBaseUrl+"/members";
+  //   return this.http.get(url).toPromise()
+  //       .then(response => { response as Member[];})
+  //       .catch(this.handleError);
+  // }
 
   public add(member:Member): Promise<Member> {
     const url:string = this.apiBaseUrl+"/members";

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
   }
 
   public getActivities(): void {
-    this.activityService.get().then(data => {
+    this.activityService.get().subscribe(data => {
       this.data = data;
       //console.log("data2: ", data);
     });

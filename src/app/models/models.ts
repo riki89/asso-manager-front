@@ -24,9 +24,10 @@ export class Member {
 
 export class Activity {
   id!:number;
+  type!:string;
   date:Date = new Date();
   lieu!:string;
-}
+} 
 
 export enum SEXE {
   F = 'Feminin',

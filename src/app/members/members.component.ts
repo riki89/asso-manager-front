@@ -81,25 +81,23 @@ export class MembersComponent implements OnInit {
     const button = document.createElement('button');
     button.type = 'button';
     button.style.display = 'none';
-    button.setAttribute('data-toggle', 'modal');
+    button.setAttribute('data-bs-toggle', 'modal');
     if (mode === 'add') {
-      button.setAttribute('data-target', '#addMemberModal');
+      button.setAttribute('data-bs-target', '#addMemberModal');
     }
     if (mode === 'edit') {
       this.editMember = Member;
-      button.setAttribute('data-target', '#updateMemberModal');
-      console.log(button.getAttribute('data-target'));
+      button.setAttribute('data-bs-target', '#updateMemberModal');
+      console.log(button.getAttribute('data-bs-target'));
       
     }
     if (mode === 'delete') {
       this.deleteMember = Member;
-      button.setAttribute('data-target', '#deleteMemberModal');
+      button.setAttribute('data-bs-target', '#deleteMemberModal');
     }
     if (mode === 'read') {
       this.readMember = Member;
-      console.log(this.readMember);
-      
-      button.setAttribute('data-target', '#readMemberModal');
+      button.setAttribute('data-bs-target', '#readMemberModal');
     }
     container?.appendChild(button);
     button.click();

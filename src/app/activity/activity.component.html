@@ -96,12 +96,12 @@
     </div>
     
     <!-- Add activity Modal -->
-    <div class="modal fade" id="addActivityModal" tabindex="-1" role="dialog" aria-labelledby="activityEditModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addActivityModal" tabindex="-1" role="dialog" aria-labelledby="addActivityModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addActivityModalLabel">Edit activity {{editActivity?.type}} {{editActivity}}</h5>
-                <button type="button" class="Fermer" data-dismiss="modal" aria-label="Fermer">
+                <h5 class="modal-title" id="addActivityModalLabel">Ajouter une activite</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -130,7 +130,7 @@
                     <input type="text" ngModel="{{editActivity?.date}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
                     </div> -->
                     <div class="modal-footer">
-                    <button type="button" id="add-activity-form" data-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                    <button type="button" id="add-activity-form" data-bs-dismiss="modal" class="btn btn-secondary">Fermer</button>
                     <button  [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Enregistrer</button>
                     </div>
                 </form>

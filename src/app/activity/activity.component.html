@@ -10,7 +10,7 @@
                 <div class="row">
                     <div *ngFor="let activity of activitysList" class="col-lg-6 col-xl-4 col-md-6 col-sm-12">
                         <div class="card card-default p-4">
-                            <a href="javascript:0" class="media text-secondary" data-toggle="modal" (click)="onOpenModal(activity, 'read')">
+                            <a href="javascript:0" class="media text-secondary" data-bs-oggle="modal" (click)="onOpenModal(activity, 'read')">
                                 <img src="/assets/img/avatar3.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
                                 <div class="media-body">
                                     <h5 class="mt-0 mb-2 text-dark">Activity: {{activity.lieu}}</h5>
@@ -37,11 +37,10 @@
                             </a>
                             <div class="card-body">
                                 <div class="float-right btn-group btn-group-sm">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#readActivityModal">
-                                        Launch demo modal
-                                      </button>
-                                <a (click)="onOpenModal(activity, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
-                                <a (click)="onOpenModal(activity, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                                    <button (click)="onOpenModal(activity, 'edit')"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-placement="top" title="Edit"> edit</button>
+                                    <button (click)="onOpenModal(activity, 'delete')" type="button" class="btn btn-secondary" data-bs-toggle="tooltip" 
+                                      data-bs-placement="top" title="Delete" data-bs-target="#deleteActivityModal">Delete</button>
+                                     <!-- modification ici-->
                                 </div>
                             </div>
                         </div>
@@ -57,8 +56,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="updateActivityModalLabel">Edit activity {{editActivity?.type}} {{editActivity?.date}}</h5>
-                <button type="button" class="Fermer" data-dismiss="modal" aria-label="Fermer">
-                <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -69,15 +68,11 @@
                     </div>
                     <input type="hidden" ngModel="{{editActivity?.id}}" name="id" class="form-control" id="id" placeholder="ID">
                     <div class="form-group">
-                    <div class="form-group">
-                        <label for="phone">Type</label>
-                        <input type="text" ngModel="{{editActivity?.type}}" name="type" class="form-control" id="type" placeholder="Type">
-                    </div>
                     <label for="date">Date</label>
                     <input type="date" ngModel="{{editActivity?.date}}" name="date" class="form-control" id="date" placeholder="Date">
                     </div>
                     <div class="form-group">
-                    <label for="lieu">Phone</label> 
+                    <label for="lieu">Lieu</label> 
                     <input type="text" ngModel="{{editActivity?.lieu}}" name="lieu" class="form-control" id="lieu" placeholder="Lieu">
                     </div>
                     
@@ -86,8 +81,9 @@
                     <input type="text" ngModel="{{editActivity?.date}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
                     </div> -->
                     <div class="modal-footer">
-                    <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                    <button type="button" id="updateActivityModal" data-dismiss="modal" data-bs-dismiss="modal" class="btn btn-secondary">Fermer</button>
                     <button  (click)="onUpdateActivity(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Enregistrer</button>
+
                     </div>
                 </form>
             </div>
@@ -101,16 +97,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addActivityModalLabel">Edit activity {{editActivity?.type}} {{editActivity}}</h5>
-                <button type="button" class="Fermer" data-dismiss="modal" aria-label="Fermer">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form #addForm="ngForm" (ngSubmit)="onAddActivity(addForm)">
-                    <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" ngModel name="nom" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Nom">
-                    </div>
                     <input type="hidden" ngModel name="id" class="form-control" id="id" placeholder="Email">
                     <div class="form-group">
                     <div class="form-group">
@@ -122,7 +114,7 @@
                     </div>
                     <div class="form-group">
                     <label for="phone">Lieu</label> 
-                    <input type="text" ngModel name="lieu" class="form-control" id="lieu" placeholder="Phone">
+                    <input type="text" ngModel name="lieu" class="form-control" id="lieu" placeholder="lieu">
                     </div>
                     
                     <!-- <div class="form-group">
@@ -130,7 +122,7 @@
                     <input type="text" ngModel="{{editActivity?.date}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
                     </div> -->
                     <div class="modal-footer">
-                    <button type="button" id="add-activity-form" data-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                    <button type="button" id="add-activity-form" data-bs-dismiss="modal" class="btn btn-secondary">Fermer</button>
                     <button  [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Enregistrer</button>
                     </div>
                 </form>
@@ -229,21 +221,22 @@
           </div>
         </div>
       </div>
+    </div>
     <!-- Delete Modal -->
     <div class="modal fade" id="deleteActivityModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModelLabel">Delete Activity</h5>
-                <button type="button" class="Fermer" data-dismiss="modal" aria-label="Fermer">
+                <button type="button" class="Fermer" data-bs-dismiss="modal" aria-label="Fermer">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete activity {{deleteActivity?.date}} {{deleteActivity?.type}}?</p>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button (click)="onDeleteActivity(deleteActivity.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button (click)="onDeleteActivity(deleteActivity.id)" class="btn btn-danger" data-bs-dismiss="modal">Yes</button>
                 </div>
             </div>
         </div>

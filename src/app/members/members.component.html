@@ -85,8 +85,8 @@
                             </select>
                         </div>
                         <div>
-                            <label for="lieu">Date d'adhesion</label> 
-                            <input type="text" ngModel="{{editMember?.joinDate}}" name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion">
+                            <label for="lieu">Date d'adhesion: {{editMember?.joinDate}}</label> 
+                            <input type="datetime-local" ngModel="{{editMember?.joinDate}}" name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion">
                         </div>
                         <div>
                             <label for="lieu">A une carte membre?</label> 
@@ -169,7 +169,7 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">Date d'adhesion</label> 
-                            <input type="text" ngModel name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion">
+                            <input type="date" ngModel name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion">
                         </div>
                         <div class="form-group">
                             <label for="phone">A deja une carte membre?</label> 

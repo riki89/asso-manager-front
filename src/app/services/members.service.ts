@@ -38,8 +38,8 @@ export class MembersService {
   }
 
   public update(member:Member): Promise<Member> {
-    const url:string = this.apiBaseUrl+"/members/"+member.id;
-    return this.http.put(url, Member).toPromise()
+    const url:string = this.apiBaseUrl+"/members";
+    return this.http.put(url, member).toPromise()
         .then(response => response as Member)
         .catch(this.handleError); 
   }

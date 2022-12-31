@@ -34,7 +34,7 @@ export class ActivityService {
   public updateActivity(activity:Activity): Promise<Activity> {
     console.log(activity);
     
-    const url:string = this.apiBaseUrl+"/activity/"+activity.id;
+    const url:string = this.apiBaseUrl+"/activity";
     return this.http.put(url, activity).toPromise()
         .then(response => response as Activity)
         .catch(this.handleError);

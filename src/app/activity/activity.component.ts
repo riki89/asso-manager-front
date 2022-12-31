@@ -74,7 +74,7 @@ export class ActivityComponent implements OnInit {
     if (mode === 'edit') {
       this.editActivity = activity;
       button.setAttribute('data-bs-target', '#updateActivityModal');
-      console.log(button.getAttribute('data-bs-target'));
+      //console.log(button.getAttribute('data-bs-target'));
       
     }
     if (mode === 'delete') {

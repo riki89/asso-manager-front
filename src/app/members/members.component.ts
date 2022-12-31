@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Member, SEXE } from '../models/models';
+import { 
+  Member, SEXE, 
+  Fonction, FonctionMapping, 
+  Type, TypeMapping 
+} from '../models/models';
 import { MembersService } from '../services/members.service';
 
 @Component({
@@ -13,23 +17,28 @@ export class MembersComponent implements OnInit {
   editMember!: Member;
   deleteMember!: Member;
   readMember!: Member;
-  SEX: SEXE = SEXE.M;
+  sexM: SEXE = SEXE.M;
+  sexF: SEXE = SEXE.F;
+  SexType = SEXE;
+  Fonction = Fonction;
+  Type = Type;
+  typeSimple = Type.simple;
+  typeBureau = Type.bureau;
+
+  FonctionMapping = FonctionMapping;
+  TypeMapping = TypeMapping;
+  fonctionTypes = Object.values(Fonction);
+  typeTypes = Object.values(Type);
+
   imgF:string = '/assets/img/avatar3.png';
   imgM:string = '/assets/img/avatar2.png';
   welcomeText = "Welcome Yahia";
 
-  constructor(private memberService: MembersService) { }
+  constructor(private memberService: MembersService) {}
 
   ngOnInit(): void {
     this.getMembers();
-    console.log(this.SEX[0]);
-    
-    this.editMember = this.membersList[0];
-    this.deleteMember = this.membersList[1];
-    this.readMember = this.membersList[0];
   }
-
-
 
   public getMembers(): void {
     this.memberService.getMembers().subscribe(
@@ -44,12 +53,12 @@ export class MembersComponent implements OnInit {
     form?.click();
     //console.log(addForm.value);
     this.memberService.add(addForm.value);
-    //window.location.reload();
+    window.location.reload();
   }
 
-  public onUpdateMember(Member: Member): void {
-    this.memberService.update(Member);
-    //window.location.reload();
+  public onUpdateMember(member: Member): void {
+    this.memberService.update(member);
+    window.location.reload();
   }
 
   public onDeleteMember(memberId: number): void {
@@ -76,7 +85,7 @@ export class MembersComponent implements OnInit {
     }
   }
 
-  public onOpenModal(Member: Member, mode: string): void {
+  public onOpenModal(member: Member, mode: string): void {
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';
@@ -86,17 +95,16 @@ export class MembersComponent implements OnInit {
       button.setAttribute('data-bs-target', '#addMemberModal');
     }
     if (mode === 'edit') {
-      this.editMember = Member;
-      button.setAttribute('data-bs-target', '#updateMemberModal');
-      console.log(button.getAttribute('data-bs-target'));
+      this.editMember = member;
       
+      button.setAttribute('data-bs-target', '#updateMemberModal');
     }
     if (mode === 'delete') {
-      this.deleteMember = Member;
+      this.deleteMember = member;
       button.setAttribute('data-bs-target', '#deleteMemberModal');
     }
     if (mode === 'read') {
-      this.readMember = Member;
+      this.readMember = member;
       button.setAttribute('data-bs-target', '#readMemberModal');
     }
     container?.appendChild(button);

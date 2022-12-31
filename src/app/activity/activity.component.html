@@ -11,36 +11,19 @@
                     <div *ngFor="let activity of activitysList" class="col-lg-6 col-xl-4 col-md-6 col-sm-12">
                         <div class="card card-default p-4">
                             <a href="javascript:0" class="media text-secondary" data-bs-oggle="modal" (click)="onOpenModal(activity, 'read')">
-                                <img src="/assets/img/avatar3.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                <div [ngSwitch]="activity?.type">
+                                    <img *ngSwitchCase="reunion" src="/assets/img/activity/reunion.jpeg" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                    <img *ngSwitchCase="sortie" src="/assets/img/activity/sortie.jpeg" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                </div>
                                 <div class="media-body">
-                                    <h5 class="mt-0 mb-2 text-dark">Activity: {{activity.lieu}}</h5>
-                                    <ul class="list-unstyled text-smoke text-smoke">
-                                        <li class="d-flex">ID:
-                                            <i class="mdi mdi-phone mr-1"></i>
-                                            <span>{{activity.id}}</span> 
-                                        </li>
-                                        <li class="d-flex">Type:
-                                            <i class="mdi mdi-phone mr-1"></i>
-                                            <span>{{activity.type}}</span> 
-                                        </li>
-                                        <li class="d-flex">Date:
-                                            <i class="mdi mdi-sex mr-1"></i>
-                                            <span>{{activity.date | date: 'short'}}</span>
-                                        </li>
-                                        <li class="d-flex">Lieu:
-                                            <i class="mdi mdi-type mr-1"></i>
-                                            <span>{{activity.lieu}}</span>
-                                        </li>
-                                    </ul>
-                                    
+                                    <h6 class="mt-0 mb-2 text-dark">{{activity.type}} du {{activity.date}} à {{activity.lieu}}</h6>
                                 </div>
                             </a>
                             <div class="card-body">
                                 <div class="float-right btn-group btn-group-sm">
-                                    <button (click)="onOpenModal(activity, 'edit')"type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-placement="top" title="Edit"> Modifier</button>
-                                    <button (click)="onOpenModal(activity, 'delete')" type="button" class="btn btn-secondary" data-bs-toggle="tooltip" 
-                                      data-bs-placement="top" title="Delete" data-bs-target="#deleteActivityModal">Supprimer</button>
-                                     <!-- modification ici-->
+                                    <a (click)="onOpenModal(activity, 'edit')" class="btn btn-primary tooltips" data-bs-placement="top" title="Edit"><i class="fa fa-pencil"></i> </a>
+                                    <a (click)="onOpenModal(activity, 'delete')" class="btn btn-secondary tooltips" data-bs-placement="top" title="Delete"><i class="fa fa-times"></i></a>
+                                <!-- modification ici-->
                                 </div>
                             </div>
                         </div>
@@ -55,16 +38,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateActivityModalLabel">Edit activity {{editActivity?.type}} {{editActivity?.date}}</h5>
+                    <h5 class="modal-title" id="updateActivityModalLabel">Modifier activite: {{editActivity?.type}} {{editActivity?.date}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
                     <form #editForm="ngForm">
-                        <div class="form-group">
-                            <label for="name">Type</label>
-                            <input type="text" ngModel="{{editActivity?.type}}" name="type" class="form-control" id="type" aria-describedby="typeHelp" placeholder="Type">
+                        <div>
+                            <label for="lieu">Type</label> 
+                            <select ngModel="{{editActivity?.type}}" name="type" class="form-select" aria-label="Default select example">
+                                <option>--Choisir--</option>
+                                <option *ngFor="let tpa of activityTypes"
+                                        [value]="tpa">
+                                    {{TypeActivityMapping[tpa]}}
+                                </option>
+                            </select>
                         </div>
                         <input type="hidden" ngModel="{{editActivity?.id}}" name="id" class="form-control" id="id" placeholder="ID">
                         <div class="form-group">
@@ -75,13 +65,8 @@
                             <label for="lieu">Lieu</label> 
                             <input type="text" ngModel="{{editActivity?.lieu}}" name="lieu" class="form-control" id="lieu" placeholder="Lieu">
                         </div>
-                        
-                        <!-- <div class="form-group">
-                        <label for="phone">Image URL</label>
-                        <input type="text" ngModel="{{editActivity?.date}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
-                        </div> -->
                         <div class="modal-footer">
-                            <button type="button" id="updateActivityModal" data-dismiss="modal" data-bs-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                            <button type="button" id="" data-dismiss="modal"  class="btn btn-secondary">Fermer</button>
                             <button  (click)="onUpdateActivity(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Enregistrer</button>
                         </div>
                     </form>
@@ -95,7 +80,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addActivityModalLabel">Edit activity {{editActivity?.type}} {{editActivity}}</h5>
+                    <h5 class="modal-title" id="addActivityModalLabel">Ajout d'une activite</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -105,11 +90,17 @@
                         <input type="hidden" ngModel name="id" class="form-control" id="id" placeholder="Email">
                         <div class="form-group">
                             <label for="phone">Type d'activite</label>
-                            <input type="text" ngModel name="type" class="form-control" id="type" placeholder="Type">
+                            <select ngModel name="type" class="form-select" aria-label="Default select example">
+                                <option>--Choisir--</option>
+                                <option *ngFor="let tpa of activityTypes"
+                                        [value]="tpa">
+                                    {{TypeActivityMapping[tpa]}}
+                                </option>
+                            </select>
                         </div>
                         <div>
                             <label for="date">Date</label>
-                            <input type="text" ngModel name="date" class="form-control" id="date" placeholder="Date">
+                            <input type="date" ngModel name="date" class="form-control" id="date" placeholder="Date">
                         </div>
                         <div class="form-group">
                             <label for="phone">Lieu</label> 
@@ -130,29 +121,25 @@
         </div>
     </div>
 
-    <!-- Activity Modal -->
+    <!-- READ Modal -->
     <div class="modal fade" id="readActivityModal" tabindex="-1" aria-labelledby="readActivityModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="readActivityModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="readActivityModalLabel">Affichage d'une activite</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="col-md-6">
-                <div class="contact-info px-4">
-                    <h4 class="mb-1">Details de activite de la date {{readActivity?.date}}</h4>
-                    <p class="text-dark font-weight-medium pt-4 mb-2">Type </p>
-                    <p>{{readActivity?.type}}</p>
-                    <p class="text-dark font-weight-medium pt-4 mb-2">Date </p>
-                    <p>{{readActivity?.date}}</p>
-                    <p class="text-dark font-weight-medium pt-4 mb-2">Lieu</p>
-                    <p>{{readActivity?.lieu}}</p>
+              <div class="col-md-12">
+                <div class="contact-info px-8">
+                    <h4 class="mb-1">Details de l'activite du: {{readActivity?.date}}</h4>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Type: {{readActivity?.type}} </p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Date: {{readActivity?.date}} </p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Lieu: {{readActivity?.lieu}} </p>  
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
           </div>
         </div>
@@ -163,13 +150,13 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModelLabel">Delete Activity</h5>
+                <h5 class="modal-title" id="deleteModelLabel">Suppression de l'activity</h5>
                 <button type="button" class="Fermer" data-bs-dismiss="modal" aria-label="Fermer">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete activity {{deleteActivity?.date}} {{deleteActivity?.type}}?</p>
+                <p>Êtes-vous sûr de vouloir supprimer {{deleteActivity?.type}} du {{deleteActivity?.date}}?</p>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button (click)="onDeleteActivity(deleteActivity.id)" class="btn btn-danger" data-bs-dismiss="modal">Yes</button>

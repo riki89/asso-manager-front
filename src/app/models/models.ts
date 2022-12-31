@@ -61,4 +61,16 @@ export enum Type {
 export const TypeMapping: Record<Type, string> = {
   [Type.bureau]: "Membre Bureau",
   [Type.simple]: "Membre Simple"
+
+}
+
+export enum TypeActivity {
+  reunion = 'reunion',
+  sortie = 'sortie'
+}
+
+export const TypeActivityMapping: Record<TypeActivity, string> = {
+  [TypeActivity.sortie]: "Sortie",
+  [TypeActivity.reunion]: "Reunion"
+  
 }

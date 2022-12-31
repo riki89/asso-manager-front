@@ -63,7 +63,7 @@ export class MembersComponent implements OnInit {
 
   public onDeleteMember(memberId: number): void {
     this.memberService.delete(memberId);
-    //window.location.reload();
+    window.location.reload();
   }
 
   public searchMembers(key: string): void {

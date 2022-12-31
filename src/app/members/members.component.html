@@ -59,17 +59,15 @@
                         <div class="form-group">
                             <label for="lieu">Sexe</label> 
                             <select ngModel="{{editMember?.sex}}" name="sex" class="form-select" aria-label="Default select example">
+                                <option>--Choisir--</option>
                                 <option value="M">Masculin</option>
                                 <option value="F">Feminin</option>
                             </select>
                         </div>
                         <div>
                             <label for="lieu">Type</label> 
-                            <!-- <select ngModel="{{editMember?.type}}" name="type" class="form-select" aria-label="Default select example">
-                                <option value="typeBureau">Membre Bureau</option>
-                                <option value="typeSimple">Membre Simple</option>
-                            </select> -->
                             <select ngModel="{{editMember?.type}}" name="type" class="form-select" aria-label="Default select example">
+                                <option>--Choisir--</option>
                                 <option *ngFor="let tp of typeTypes"
                                         [value]="tp">
                                     {{TypeMapping[tp]}}
@@ -79,6 +77,7 @@
                         <div>
                             <label for="lieu">Fonction</label>
                             <select ngModel="{{editMember?.function}}" name="function" class="form-select" aria-label="Default select example">
+                                <option>--Choisir--</option>
                                 <option *ngFor="let fonction of fonctionTypes"
                                         [value]="fonction">
                                     {{FonctionMapping[fonction]}}
@@ -142,6 +141,7 @@
                         <div class="form-group">
                             <label for="phone">Sexe</label> 
                             <select ngModel name="sex" class="form-select" aria-label="Default select example">
+                                <option selected>--Choisir--</option>
                                 <option name="sex" value="M">Masculin</option>
                                 <option value="F">Feminin</option>
                             </select>
@@ -150,6 +150,7 @@
                         <div class="form-group">
                             <label for="phone">Type</label> 
                             <select ngModel name="type" class="form-select" aria-label="Default select example">
+                                <option selected>--Choisir--</option>
                                 <option *ngFor="let tp of typeTypes"
                                         [value]="tp">
                                     {{TypeMapping[tp]}}
@@ -159,6 +160,7 @@
                         <div class="form-group">
                             <label for="phone">Fonction</label> 
                             <select ngModel name="type" class="form-select" aria-label="Default select example">
+                                <option selected>--Choisir--</option>
                                 <option *ngFor="let fonction of fonctionTypes"
                                         [value]="fonction">
                                     {{FonctionMapping[fonction]}}

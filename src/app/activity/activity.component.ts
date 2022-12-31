@@ -1,6 +1,7 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Activity } from '../models/models';
+import { Activity, TypeActivity, TypeActivityMapping } from '../models/models';
 import { ActivityService } from '../services/activity.service';
 
 @Component({
@@ -9,11 +10,17 @@ import { ActivityService } from '../services/activity.service';
   styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
-
-  activitysList!: Activity[];
+  activitysList: Activity[] = [];
   editActivity!: Activity;
   deleteActivity!: Activity;
   readActivity!: Activity;
+  TypeActivity!: TypeActivity;
+  reunion: TypeActivity = TypeActivity.reunion;
+  sortie: TypeActivity = TypeActivity.sortie;
+
+  TypeActivityMapping = TypeActivityMapping;
+  activityTypes = Object.values(TypeActivity);
+  locale = 'en-US';
 
   constructor(private activityService:ActivityService) {}
 
@@ -29,22 +36,28 @@ export class ActivityComponent implements OnInit {
     });
   }
 
+
+
   public onAddActivity(addForm: NgForm): void {
     const form = document.getElementById('add-activity-form');
     form?.click();
-    //console.log(addForm.value);
-    this.activityService.addActivity(addForm.value);
-    //window.location.reload();
+    // console.log(addForm.value);
+    const activity = addForm.value as Activity;
+    activity.date = formatDate(activity.date, 'dd/MM/yyyy', this.locale);
+    this.activityService.addActivity(activity);
+    window.location.reload();
   }
 
   public onUpdateActivity(activity: Activity): void {
+    //console.log(activity);
+    activity.date = formatDate(activity.date, 'dd/MM/yyyy', this.locale);
     this.activityService.updateActivity(activity);
-    //window.location.reload();
+    window.location.reload();
   }
 
   public onDeleteActivity(activityId: number): void {
     this.activityService.deleteActivity(activityId);
-    //window.location.reload();
+    window.location.reload();
   }
 
   public searchActivitys(key: string): void {
@@ -89,7 +102,7 @@ export class ActivityComponent implements OnInit {
     }
     container?.appendChild(button);
     button.click();
-    
+
   }
 
 }

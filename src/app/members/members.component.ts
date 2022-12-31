@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { 
@@ -30,8 +31,7 @@ export class MembersComponent implements OnInit {
   fonctionTypes = Object.values(Fonction);
   typeTypes = Object.values(Type);
 
-  imgF:string = '/assets/img/avatar3.png';
-  imgM:string = '/assets/img/avatar2.png';
+  locale = 'en-US';
   welcomeText = "Welcome Yahia";
 
   constructor(private memberService: MembersService) {}
@@ -52,11 +52,18 @@ export class MembersComponent implements OnInit {
     const form = document.getElementById('add-member-form');
     form?.click();
     //console.log(addForm.value);
-    this.memberService.add(addForm.value);
+    const member  = addForm.value as Member;
+    member.joinDate = formatDate(member.joinDate, 'MM/dd/yyyy', this.locale);
+    this.memberService.add(member).then(response => {
+      // this.updateSuceessToast();
+    });
     window.location.reload();
   }
 
   public onUpdateMember(member: Member): void {
+    member.joinDate = formatDate(member.joinDate, 'dd/MM/yyyy', this.locale);
+    // console.log(member.joinDate);
+    
     this.memberService.update(member);
     window.location.reload();
   }

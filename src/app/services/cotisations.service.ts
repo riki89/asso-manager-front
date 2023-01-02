@@ -13,16 +13,18 @@ export class CotisationsService {
 
   constructor(private http: HttpClient) { }
 
-  // public get(): Observable<any> {
-  //   const url:string = this.apiBaseUrl+"/cotisations";
-  //   return this.http.get(url);
-  // }
-  public get(): Promise<Cotisation[]> {
+  public get(): Observable<any> {
     const url:string = this.apiBaseUrl+"/cotisations";
-    return this.http.get(url).toPromise()
-        .then(response => { response as Cotisation[];})
-        .catch(this.handleError);
+    return this.http.get(url);
   }
+  // public get(): Promise<Cotisation[]> {
+  //   const url:string = this.apiBaseUrl+"/cotisations";
+  //   return this.http.get(url).toPromise()
+  //       .then(response => { response as Cotisation[];
+  //       console.log(response);
+  //       })
+  //       .catch(this.handleError);
+  // }
 
   public add(cotisation:Cotisation): Promise<Cotisation> {
     const url:string = this.apiBaseUrl+"/cotisations";

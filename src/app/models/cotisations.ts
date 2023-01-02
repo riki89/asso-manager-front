@@ -1,21 +1,32 @@
+import { Member } from "./models";
+
 export class Cotisation { 
     id!: number;
-    month!:number;
+    month!:string;
     amount!:number;
     date!:string
     meanOfPayment!:MeanOfPayment;
     description!:string;
-    member!:number;
+    member!:Member;
 }
 
 export enum MeanOfPayment {
-reunion = 'reunion',
-sortie = 'sortie'
+om = 'om',
+wave = 'wave',
+tigo = 'tigo',
+western = 'western',
+moneygram = 'moneygram',
+cardpayment = 'cardpayment',
+cash = 'cash'
 }
 
 export const MeanOfPaymentMapping: Record<MeanOfPayment, string> = {
-[MeanOfPayment.sortie]: "Sortie",
-[MeanOfPayment.reunion]: "Reunion"
-
+[MeanOfPayment.cash]: "Cash",
+[MeanOfPayment.cardpayment]: "Carte bancaire",
+[MeanOfPayment.om]: "Orange Money",
+[MeanOfPayment.tigo]: "Free Money (Tigo)",
+[MeanOfPayment.western]: "Western Union",
+[MeanOfPayment.moneygram]: "MoneyGram",
+[MeanOfPayment.wave]: "Wave",
 }
   

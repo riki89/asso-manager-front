@@ -1,9 +1,10 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Cotisation } from 'src/app/models/cotisations';
+import { Cotisation, MeanOfPayment, MeanOfPaymentMapping } from 'src/app/models/cotisations';
 import { Member } from 'src/app/models/models';
 import { CotisationsService } from 'src/app/services/cotisations.service';
+import { MembersService } from '../services/members.service';
 
 @Component({
   selector: 'app-cotisation',
@@ -11,45 +12,65 @@ import { CotisationsService } from 'src/app/services/cotisations.service';
   styleUrls: ['./cotisation.component.css']
 })
 export class CotisationComponent implements OnInit {
-  cotisationsList: Cotisation[] = [];
+  cotisationsList!: Cotisation[];
   editCotisation!: Cotisation;
   deleteCotisation!: Cotisation;
   readCotisation!: Cotisation;
   membersList!:Member[];
 
-  // FonctionMapping = FonctionMapping;
+  MeanOfPaymentMapping = MeanOfPaymentMapping;
   // TypeMapping = TypeMapping;
-  // fonctionTypes = Object.values(Fonction);
+  paymentTypes = Object.values(MeanOfPayment);
   // typeTypes = Object.values(Type);
-
   locale = 'en-US';
-  welcomeText = "Welcome Yahia";
 
-  constructor(private cotisationService: CotisationsService) {}
+  constructor(private cotisationService: CotisationsService, private memberService: MembersService) {}
 
   ngOnInit(): void {
     this.getList();
+    this.getMembersList();
   }
 
   public getList(): void {
-    this.cotisationService.get().then(response => {
+    this.cotisationService.get().subscribe(response => {
         this.cotisationsList = response;
+        console.log("list cotisation: ", response);
+        
     });
+  }
+
+  public getMembersList(): void {
+    this.memberService.getMembers().subscribe(response => {
+        this.membersList = response;
+        console.log("list members: ",response);
+        
+    });
+  }
+
+  public getMember(memberId:number) {
+    return this.cotisationService.getMember(memberId);
   }
 
   public onAddCotisation(addForm: NgForm): void {
     const form = document.getElementById('add-cotisation-form');
     form?.click();
-    //console.log(addForm.value);
+    console.log(addForm.value);
     const cotisation  = addForm.value as Cotisation;
-    cotisation.date = formatDate(cotisation.date, 'MM/dd/yyyy', this.locale);
+    cotisation.month = formatDate(cotisation.month, 'dd/MM/yyyy', this.locale);
+    cotisation.date = formatDate(cotisation.date, 'dd/MM/yyyy', this.locale);
     this.cotisationService.add(cotisation).then(response => {
       // this.updateSuceessToast();
+      alert("Cotisation ajoutee avec succès!");
+    }).catch( error => {
+      alert("Erreur lors de l'ajout \n");
+    }).finally( () => {
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   public onUpdateCotisation(cotisation: Cotisation): void {
+    cotisation.month = formatDate(cotisation.month, 'dd/MM/yyyy', this.locale);
     cotisation.date = formatDate(cotisation.date, 'dd/MM/yyyy', this.locale);
     // console.log(cotisation.date);
     

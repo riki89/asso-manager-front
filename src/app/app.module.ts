@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActivityComponent } from './activity/activity.component';
 import { MembersService } from './services/members.service';
 import { ActivityService } from './services/activity.service';
-import { CotisationComponent } from './cotisation/cotisation/cotisation.component';
+import { CotisationComponent } from './cotisation/cotisation.component';
 import { CotisationsService } from './services/cotisations.service';
 
 @NgModule({

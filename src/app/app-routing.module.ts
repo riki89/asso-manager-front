@@ -6,6 +6,10 @@ import { MembersComponent } from './members/members.component';
 
 const routes: Routes = [
   {
+    path: "",
+    component: MembersComponent
+  },
+  {
     path: "members",
     component: MembersComponent
   },

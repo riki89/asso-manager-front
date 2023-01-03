@@ -71,7 +71,7 @@
                                 <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" />
                                     <a href="#" class="text-body">{{cotisation.member.firstName}}</a>
                                 </td>
-                                <td><span class="badge badge-soft-success mb-0">{{cotisation.month}}</span></td>
+                                <td><span class="badge badge-soft-success mb-0">{{cotisation.month | date:'MMMM'}}</span></td>
                                 <td>{{cotisation.amount}}</td>
                                 <td>{{cotisation.date}}</td>
                                 <td>{{cotisation.description}}</td>

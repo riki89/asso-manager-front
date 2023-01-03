@@ -16,7 +16,7 @@
                                     <img *ngSwitchCase="sortie" src="/assets/img/activity/sortie.jpeg" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
                                 </div>
                                 <div class="media-body">
-                                    <h6 class="mt-0 mb-2 text-dark">{{activity.type}} du {{activity.date}} à {{activity.lieu}}</h6>
+                                    <h6 class="mt-0 mb-2 text-dark">{{activity.type | titlecase}} du {{activity.date}} à {{activity.lieu}}</h6>
                                 </div>
                             </a>
                             <div class="card-body">
@@ -38,7 +38,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateActivityModalLabel">Modifier activite: {{editActivity?.type}} {{editActivity?.date}}</h5>
+                    <h5 class="modal-title" id="updateActivityModalLabel">Modification de la {{editActivity?.type}} du {{editActivity?.date | date:'fullDate'}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -10,13 +10,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActivityComponent } from './activity/activity.component';
 import { MembersService } from './services/members.service';
 import { ActivityService } from './services/activity.service';
+import { CompteRenduService } from './services/compteRendu.service';
+import { CompteRenduComponent } from './compteRendu/compteRendu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     MembersComponent,
-    ActivityComponent
+    ActivityComponent,
+    CompteRenduComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { ActivityService } from './services/activity.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [MembersService, ActivityService],
+  providers: [MembersService, ActivityService, CompteRenduService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

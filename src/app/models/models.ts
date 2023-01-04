@@ -29,6 +29,12 @@ export class Activity {
   lieu!:string;
 } 
 
+export class CompteRendu {
+  id!:number;
+  ordreJ!:string;
+  resume!:string;
+} 
+
 export enum SEXE {
   F = 'Feminin',
   M = 'Masculin'

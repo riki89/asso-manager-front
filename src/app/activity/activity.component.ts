@@ -72,7 +72,9 @@ export class ActivityComponent implements OnInit {
       button.setAttribute('data-target', '#addActivityModal');
     }
     if (mode === 'edit') {
+      
       this.editActivity = activity;
+      console.log("",this.editActivity," mode: ",mode);
       button.setAttribute('data-target', '#updateActivityModal');
       console.log(button.getAttribute('data-target'));
       

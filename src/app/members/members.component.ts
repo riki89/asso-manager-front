@@ -53,9 +53,15 @@ export class MembersComponent implements OnInit {
     form?.click();
     //console.log(addForm.value);
     const member  = addForm.value as Member;
-    member.joinDate = formatDate(member.joinDate, 'MM/dd/yyyy', this.locale);
+    if(member.function === '-1') {
+      member.function = '';
+    }
+    member.joinDate = formatDate(member.joinDate, 'dd/MM/yyyy', this.locale);
     this.memberService.add(member).then(response => {
       // this.updateSuceessToast();
+      alert("Ajout réalisé avec succés!")
+    }).catch( error => {
+      alert("Erreur lors de l'ajout\n"+error);
     });
     window.location.reload();
   }

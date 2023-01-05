@@ -11,14 +11,14 @@
                         <div class="card card-default p-4">
                             <a href="javascript:0" class="media text-secondary" data-bs-target="modal" (click)="onOpenModal(member, 'read')">
                                 <div [ngSwitch]="member?.sex">
-                                    <img *ngSwitchCase="sexM[0]" src="/assets/img/avatar2.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
-                                    <img *ngSwitchCase="sexF[0]" src="/assets/img/avatar3.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                    <img *ngSwitchCase="sexM[0]" src="/assets/img/m.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                    <img *ngSwitchCase="sexF[0]" src="/assets/img/f.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
                                 </div>
-                                <div class="media-body">
+                                <div class="media-body text-center">
                                     <h5 class="mt-0 mb-2 text-dark">{{member.firstName}} {{member.lastName}}</h5>
                                 </div>
                             </a>
-                            <div class="card-body">
+                            <div class="card-body text-center">
                                 <div class="float-right btn-group btn-group-sm">
                                 <a (click)="onOpenModal(member, 'edit')" class="btn btn-primary tooltips" data-bs-placement="top" title="Edit"><i class="fa fa-pencil"></i> </a>
                                 <a (click)="onOpenModal(member, 'delete')" class="btn btn-secondary tooltips" data-bs-placement="top" title="Delete"><i class="fa fa-times"></i></a>
@@ -46,28 +46,26 @@
                         <input type="hidden" ngModel="{{editMember?.id}}" name="id" class="form-control" id="id" placeholder="ID">
                         <div class="form-group">
                             <label for="phone">Prenom</label>
-                            <input type="text" ngModel="{{editMember?.firstName}}" name="firstName" class="form-control" id="firstName" placeholder="Prenom">
+                            <input type="text" ngModel="{{editMember?.firstName}}" name="firstName" class="form-control" id="firstName" placeholder="Prenom" required>
                         </div>
                         <div>
                             <label for="date">Nom</label>
-                            <input type="text" ngModel="{{editMember?.lastName}}" name="lastName" class="form-control" id="lastName" placeholder="Nom">
+                            <input type="text" ngModel="{{editMember?.lastName}}" name="lastName" class="form-control" id="lastName" placeholder="Nom" required>
                         </div>
                         <div class="form-group">
                             <label for="lieu">Telephone</label> 
-                            <input type="text" ngModel="{{editMember?.phoneNumber}}" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone">
+                            <input type="text" ngModel="{{editMember?.phoneNumber}}" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone" required>
                         </div>
                         <div class="form-group">
                             <label for="lieu">Sexe</label> 
-                            <select ngModel="{{editMember?.sex}}" name="sex" class="form-select" aria-label="Default select example">
-                                <option>--Choisir--</option>
+                            <select ngModel="{{editMember?.sex}}" name="sex" class="form-select" aria-label="Default select example" required>
                                 <option value="M">Masculin</option>
                                 <option value="F">Feminin</option>
                             </select>
                         </div>
                         <div>
                             <label for="lieu">Type</label> 
-                            <select ngModel="{{editMember?.type}}" name="type" class="form-select" aria-label="Default select example">
-                                <option>--Choisir--</option>
+                            <select ngModel="{{editMember?.type}}" name="type" class="form-select" aria-label="Default select example" required>
                                 <option *ngFor="let tp of typeTypes"
                                         [value]="tp">
                                     {{TypeMapping[tp]}}
@@ -77,7 +75,7 @@
                         <div>
                             <label for="lieu">Fonction</label>
                             <select ngModel="{{editMember?.function}}" name="function" class="form-select" aria-label="Default select example">
-                                <option>--Choisir--</option>
+                                <option [value]="-1">--Choisir--</option>
                                 <option *ngFor="let fonction of fonctionTypes"
                                         [value]="fonction">
                                     {{FonctionMapping[fonction]}}
@@ -86,7 +84,7 @@
                         </div>
                         <div>
                             <label for="lieu">Date d'adhesion: {{editMember?.joinDate}}</label> 
-                            <input type="datetime-local" ngModel="{{editMember?.joinDate}}" name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion">
+                            <input type="datetime-local" ngModel="{{editMember?.joinDate}}" name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion" required>
                         </div>
                         <div>
                             <label for="lieu">A une carte membre?</label> 
@@ -129,28 +127,26 @@
                             <input type="hidden" ngModel name="id" class="form-control" id="id" placeholder="Email">
                         <div class="form-group">
                             <label for="phone">Prenom</label>
-                            <input type="text" ngModel name="firstName" class="form-control" id="firstName" placeholder="Prenom">
+                            <input type="text" ngModel name="firstName" class="form-control" id="firstName" placeholder="Prenom" required>
                         </div>
                             <label for="date">Nom</label>
-                            <input type="text" ngModel name="lastName" class="form-control" id="lastName" placeholder="Nom">
+                            <input type="text" ngModel name="lastName" class="form-control" id="lastName" placeholder="Nom" required>
                         </div>
                         <div class="form-group">
                             <label for="phone">Telephone</label> 
-                            <input type="text" ngModel name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone">
+                            <input type="text" ngModel name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone" required>
                         </div>
                         <div class="form-group">
                             <label for="phone">Sexe</label> 
-                            <select ngModel name="sex" class="form-select" aria-label="Default select example">
-                                <option selected>--Choisir--</option>
-                                <option name="sex" value="M">Masculin</option>
+                            <select ngModel name="sex" class="form-select" aria-label="Default select example" required>
+                                <option selected name="sex" value="M">Masculin</option>
                                 <option value="F">Feminin</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Type</label> 
-                            <select ngModel name="type" class="form-select" aria-label="Default select example">
-                                <option selected>--Choisir--</option>
+                            <select ngModel name="type" class="form-select" aria-label="Default select example" required>
                                 <option *ngFor="let tp of typeTypes"
                                         [value]="tp">
                                     {{TypeMapping[tp]}}
@@ -159,17 +155,16 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">Fonction</label> 
-                            <select ngModel name="type" class="form-select" aria-label="Default select example">
-                                <option selected>--Choisir--</option>
+                            <select ngModel name="type" class="form-select" aria-label="Default select example" required>
                                 <option *ngFor="let fonction of fonctionTypes"
-                                        [value]="fonction">
+                                        [value]="fonction" required>
                                     {{FonctionMapping[fonction]}}
                                 </option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="phone">Date d'adhesion</label> 
-                            <input type="date" ngModel name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion">
+                            <input type="date" ngModel name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion" required>
                         </div>
                         <div class="form-group">
                             <label for="phone">A deja une carte membre?</label> 
@@ -181,6 +176,10 @@
                                 <input ngModel class="form-check-input" type="radio" name="memberCard" value="false" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">Non</label>
                             </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" id="inputGroupFile02">
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
                         </div>
                 
                         <!-- <div class="form-group">
@@ -207,24 +206,36 @@
             <div class="modal-body">
                 <div class="col-md-12">
                     <div class="contact-info px-4">
-                        <h4 class="mb-1">Details du membre: {{readMember?.firstName}} {{readMember?.lastName}}</h4>
-                        <p class="text-dark font-weight-medium pt-4 mb-2">Prenom: {{readMember?.firstName}}</p>
-                        <p class="text-dark font-weight-medium pt-4 mb-2">Nom: {{readMember?.lastName}}</p>
+                        <!-- <img src="https://www.bootdey.com/image/280x120/6495ED/000000" class="card-img-top img-fluid" alt=""> -->
+                        <a href="#!.html" class="avatar xl rounded-circle bg-gray bg-opacity-10 p-1 position-relative mt-n5 d-block mx-auto">
+                            <!-- <img src="./assets/img/readMember?sex.png" class="avatar-img img-fluid rounded-circle" alt=""> -->
+                            <div [ngSwitch]="readMember?.sex">
+                                <img *ngSwitchCase="sexM[0]" src="/assets/img/m.png" class="avatar-img img-fluid rounded-circle" alt="Avatar Image"/>
+                                <img *ngSwitchCase="sexF[0]" src="/assets/img/f.png" class="avatar-img img-fluid rounded-circle" alt="Avatar Image"/>
+                            </div>
+                        </a>
+                          <h5 class="mb-0 pt-3">
+                            <a class="text-reset">{{readMember?.firstName}} {{readMember?.lastName}}</a>
+                          </h5>
+                          <span class="text-muted small d-block mb-4">{{FonctionMapping.president}}</span>
+                        <!-- <h4 class="mb-1">{{readMember?.firstName}} {{readMember?.lastName}}</h4> -->
+                        <!-- <p class="text-dark font-weight-medium pt-4 mb-2">Prenom: {{readMember?.firstName}}</p> -->
+                        <!-- <p class="text-dark font-weight-medium pt-4 mb-2">Nom: {{readMember?.lastName}}</p> -->
                         <p class="text-dark font-weight-medium pt-4 mb-2">Telephone: {{readMember?.phoneNumber}}</p>
                         <p class="text-dark font-weight-medium pt-4 mb-2" *ngIf="readMember?.sex == sexF[0]">Sexe: {{SexType.F}}</p>
                         <p class="text-dark font-weight-medium pt-4 mb-2" *ngIf="readMember?.sex == sexM[0]">Sexe: {{SexType.M}}</p>
-                        <div [ngSwitch]="readMember?.type">
+                        <!-- <div [ngSwitch]="readMember?.type">
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Type.simple">Type: {{TypeMapping.simple}}</p>
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Type.bureau">Type: {{TypeMapping.bureau}}</p>
-                        </div>
-                        <div [ngSwitch]="readMember?.function">
+                        </div> -->
+                        <!-- <div [ngSwitch]="readMember?.function">
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Fonction.president">Fonction: {{FonctionMapping.president}}</p>
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Fonction.vice_presi">Fonction: {{FonctionMapping.vice_presi}}</p>
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Fonction.tresorier">Fonction: {{FonctionMapping.tresorier}}</p>
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Fonction.ges_comptes">Fonction: {{FonctionMapping.ges_comptes}}</p>
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Fonction.secretaire">Fonction: {{FonctionMapping.secretaire}}</p>
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Fonction.finance">Fonction: {{FonctionMapping.finance}}</p>
-                        </div>
+                        </div> -->
                         <p class="text-dark font-weight-medium pt-4 mb-2">Date d'adhesion: {{readMember?.joinDate}}</p>
                             <div [ngSwitch]="readMember?.memberCard">
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="true">Carte membre? Oui</p>

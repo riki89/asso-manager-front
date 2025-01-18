@@ -1,38 +1,26 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class Member { 
-  id!: number;
-  lastName!:string;
-  firstName!:string;
-  phoneNumber!:string
-  sex!:SEXE;
-  type!:string;
-  function!:string;
-  joinDate!:string;
-  memberCard:boolean = false;
+export interface Member { 
+  id: number;
+  lastName: string;
+  firstName: string;
+  phoneNumber: string
+  sex: MemberSEX;
+  type: string;
+  function: string;
+  joinDate: string;
+  memberCard: boolean;
 }
 
 
-export class Activity {
-  id!:number;
-  type!:string;
-  date!:string;
-  // date:Date = new Date();
-  lieu!:string;
+export interface Activity {
+  id: number;
+  type: string;
+  date: string;
+  lieu: string;
 } 
 
-export enum SEXE {
-  F = 'Feminin',
-  M = 'Masculin'
+export enum MemberSEX {
+  F = 'M',
+  M = 'M'
 }
 
 export enum Fonction {
@@ -53,14 +41,14 @@ export const FonctionMapping: Record<Fonction, string> = {
   [Fonction.finance]: 'Finance'
 }
 
-export enum Type {
+export enum MemberType {
   simple = 'simple',
   bureau = 'bureau'
 }
 
-export const TypeMapping: Record<Type, string> = {
-  [Type.bureau]: "Membre Bureau",
-  [Type.simple]: "Membre Simple"
+export const TypeMapping: Record<MemberType, string> = {
+  [MemberType.bureau]: "Membre Bureau",
+  [MemberType.simple]: "Membre Simple"
 
 }
 
@@ -71,6 +59,5 @@ export enum TypeActivity {
 
 export const TypeActivityMapping: Record<TypeActivity, string> = {
   [TypeActivity.sortie]: "Sortie",
-  [TypeActivity.reunion]: "Reunion"
-  
+  [TypeActivity.reunion]: "Reunion"  
 }

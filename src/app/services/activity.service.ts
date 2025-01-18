@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Activity } from '../models/models';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { Activity } from '../models/models';
 export class ActivityService {
 
   private apiBaseUrl: string = "http://localhost:8080";
+  // private apiBaseUrl = environment.backEndUrl;
 
   constructor(private http: HttpClient) { }
 

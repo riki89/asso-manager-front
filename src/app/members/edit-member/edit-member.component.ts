@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Fonction, FonctionMapping, Member, MemberSEX, MemberType, TypeMapping } from 'src/app/models/models';
 import { MembersComponent } from '../members.component';
 import { MembersService } from 'src/app/services/members.service';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-edit-member',
@@ -33,11 +32,7 @@ export class EditMemberComponent {
 
   public onUpdateMember(member: Member): void {
       // member.joinDate = formatDate(member.joinDate, 'dd/MM/yyyy', this.locale);
-      // console.log(member.joinDate);
-
-      console.log(member.joinDate);
-      
-      
+      // console.log(member.joinDate);      
       this.memberService.update(member);
       window.location.reload();
     }

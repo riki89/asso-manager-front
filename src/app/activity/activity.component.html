@@ -38,7 +38,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateActivityModalLabel">Modification de la {{editActivity?.type}} du {{editActivity?.date | date:'fullDate'}}</h5>
+                    <h5 class="modal-title" id="updateActivityModalLabel">Modification de la {{editActivity.type}} du {{editActivity.date | date:'fullDate'}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -48,7 +48,7 @@
                     <form #editForm="ngForm">
                         <div>
                             <label for="lieu">Type</label> 
-                            <select ngModel="{{editActivity?.type}}" name="type" class="form-select" aria-label="Default select example">
+                            <select ngModel="{{editActivity.type}}" name="type" class="form-select" aria-label="Default select example">
                                 <option>--Choisir--</option>
                                 <option *ngFor="let tpa of activityTypes"
                                         [value]="tpa">
@@ -56,14 +56,14 @@
                                 </option>
                             </select>
                         </div>
-                        <input type="hidden" ngModel="{{editActivity?.id}}" name="id" class="form-control" id="id" placeholder="ID">
+                        <input type="hidden" ngModel="{{editActivity.id}}" name="id" class="form-control" id="id" placeholder="ID">
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input type="date" ngModel="{{editActivity?.date}}" name="date" class="form-control" id="date" placeholder="Date">
+                            <input type="date" ngModel="{{editActivity.date}}" name="date" class="form-control" id="date" placeholder="Date">
                         </div>
                         <div class="form-group">
                             <label for="lieu">Lieu</label> 
-                            <input type="text" ngModel="{{editActivity?.lieu}}" name="lieu" class="form-control" id="lieu" placeholder="Lieu">
+                            <input type="text" ngModel="{{editActivity.lieu}}" name="lieu" class="form-control" id="lieu" placeholder="Lieu">
                         </div>
                         <div class="modal-footer">
                             <button type="button" id="" data-dismiss="modal"  class="btn btn-secondary">Fermer</button>
@@ -109,7 +109,7 @@
                         
                         <!-- <div class="form-group">
                         <label for="phone">Image URL</label>
-                        <input type="text" ngModel="{{editActivity?.date}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
+                        <input type="text" ngModel="{{editActivity.date}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
                         </div> -->
                         <div class="modal-footer">
                             <button type="button" id="add-activity-form" data-bs-dismiss="modal" class="btn btn-secondary">Fermer</button>
@@ -132,10 +132,10 @@
             <div class="modal-body">
               <div class="col-md-12">
                 <div class="contact-info px-8">
-                    <h4 class="mb-1">Details de l'activite du: {{readActivity?.date}}</h4>
-                    <p class="text-dark font-weight-medium pt-4 mb-2">Type: {{readActivity?.type}} </p>
-                    <p class="text-dark font-weight-medium pt-4 mb-2">Date: {{readActivity?.date}} </p>
-                    <p class="text-dark font-weight-medium pt-4 mb-2">Lieu: {{readActivity?.lieu}} </p>  
+                    <h4 class="mb-1">Details de l'activite du: {{readActivity.date}}</h4>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Type: {{readActivity.type}} </p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Date: {{readActivity.date}} </p>
+                    <p class="text-dark font-weight-medium pt-4 mb-2">Lieu: {{readActivity.lieu}} </p>  
                 </div>
             </div>
             <div class="modal-footer">
@@ -156,7 +156,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Êtes-vous sûr de vouloir supprimer {{deleteActivity?.type}} du {{deleteActivity?.date}}?</p>
+                <p>Êtes-vous sûr de vouloir supprimer {{deleteActivity.type}} du {{deleteActivity.date}}?</p>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button (click)="onDeleteActivity(deleteActivity.id)" class="btn btn-danger" data-bs-dismiss="modal">Yes</button>

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Member } from '../models/models';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { Member } from '../models/models';
 export class MembersService {
 
   private apiBaseUrl: string = "http://localhost:8080";
+  // private apiBaseUrl: string = environment.backEndUrl;
 
   constructor(private http: HttpClient) { }
 

@@ -1,0 +1,40 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{ member.firstName }} {{ member.lastName}}</mat-card-title>
+    <mat-card-subtitle *ngIf="member.fonction === MemberType.bureau"> {{ member.type }}</mat-card-subtitle>
+  </mat-card-header>
+  <div [ngSwitch]="member.sex">
+    <img
+    *ngSwitchCase="'M'"
+    mat-card-image
+    src="./assets/img/m.png"
+    alt="Photo de {{ member.firstName }}"
+   />
+
+   <img
+    *ngSwitchCase="'F'"
+    mat-card-image
+    src="/assets/img/f.png"
+    alt="Photo de {{ member.firstName }}"
+   />
+  </div>
+
+  <mat-card-content>
+    Nom: <span>{{ member.firstName}} {{ member.lastName}}</span> <br/>
+    Sexe: <span>{{ member.sex}} </span> <br/>
+    Telephone: <span>{{ member.phoneNumber}} </span> <br/>
+    Fonction: <span>{{ member.fonction}} </span> <br/>
+    Date d'adhesion: <span>{{ member.joinDate | date: 'dd/MM/yyyy'}} </span>
+
+    <!-- <p>
+      The Shiba Inu is the smallest of the six original and distinct spitz
+      breeds of dog from Japan. A small, agile dog that copes very well with
+      mountainous terrain, the Shiba Inu was originally bred for hunting.
+    </p> -->
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+</mat-card>

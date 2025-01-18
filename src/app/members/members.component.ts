@@ -1,12 +1,22 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSpinner } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
+
+//third-party
+import { Observable } from 'rxjs';
+
+//App
 import { 
-  Member, SEXE, 
-  Fonction, FonctionMapping, 
-  Type, TypeMapping 
+  Member, Fonction, FonctionMapping, 
+  MemberType, TypeMapping, MemberSEX
 } from '../models/models';
+
 import { MembersService } from '../services/members.service';
+import { EditMemberComponent } from './edit-member/edit-member.component';
+import { ViewMemberComponent } from './view-member/view-member.component';
+import { ViewTestComponent } from './view-test/view-test.component';
 
 @Component({
   selector: 'app-members',
@@ -14,36 +24,36 @@ import { MembersService } from '../services/members.service';
   styleUrls: ['./members.component.css']
 })
 export class MembersComponent implements OnInit {
-  membersList: Member[] = [];
+  membersList$: Observable<Member[]> | undefined; 
   editMember!: Member;
   deleteMember!: Member;
   readMember!: Member;
-  sexM: SEXE = SEXE.M;
-  sexF: SEXE = SEXE.F;
-  SexType = SEXE;
-  Fonction = Fonction;
-  Type = Type;
-  typeSimple = Type.simple;
-  typeBureau = Type.bureau;
 
+  sexM: MemberSEX = MemberSEX.M;
+  sexF: MemberSEX = MemberSEX.F;
+  SexType = MemberSEX;
+  
   FonctionMapping = FonctionMapping;
   TypeMapping = TypeMapping;
   fonctionTypes = Object.values(Fonction);
-  typeTypes = Object.values(Type);
+  typeTypes = Object.values(MemberType);
 
   locale = 'en-US';
   welcomeText = "Welcome Yahia";
 
+  readonly dialog = inject(MatDialog);
+
   constructor(private memberService: MembersService) {}
 
   ngOnInit(): void {
-    this.getMembers();
+    this.membersList$ = this.memberService.getMembers();
+    // this.getMembers();
   }
 
   public getMembers(): void {
     this.memberService.getMembers().subscribe(
       data => {
-        this.membersList = data;
+        this.membersList$ = data;
       }
     )
   }
@@ -53,8 +63,8 @@ export class MembersComponent implements OnInit {
     form?.click();
     //console.log(addForm.value);
     const member  = addForm.value as Member;
-    if(member.function === '-1') {
-      member.function = '';
+    if(member.fonction === '-1') {
+      member.fonction = '';
     }
     member.joinDate = formatDate(member.joinDate, 'dd/MM/yyyy', this.locale);
     this.memberService.add(member).then(response => {
@@ -79,57 +89,42 @@ export class MembersComponent implements OnInit {
     window.location.reload();
   }
 
-  public searchMembers(key: string): void {
-    console.log(key);
-    const results: Member[] = [];
-    for (const member of this.membersList) {
-      if (member.firstName.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || member.lastName.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || member.phoneNumber.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || member.type.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || member.function.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || member.sex.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
-        results.push(member);
+  openEditDialog(member: Member): void {
+    const dialogRef = this.dialog.open(EditMemberComponent, {
+      data: member,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        member = result;
       }
-    }
-    this.membersList = results;
-    if (results.length === 0 || !key) {
-      this.getMembers();
-    }
+    });
   }
 
-  public onOpenModal(member: Member, mode: string): void {
-    const container = document.getElementById('main-container');
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.style.display = 'none';
-    button.setAttribute('data-bs-toggle', 'modal');
-    if (mode === 'add') {
-      button.setAttribute('data-bs-target', '#addMemberModal');
-    }
-    if (mode === 'edit') {
-      this.editMember = member;
-      
-      button.setAttribute('data-bs-target', '#updateMemberModal');
-    }
-    if (mode === 'delete') {
-      this.deleteMember = member;
-      button.setAttribute('data-bs-target', '#deleteMemberModal');
-    }
-    if (mode === 'read') {
-      this.readMember = member;
-      button.setAttribute('data-bs-target', '#readMemberModal');
-    }
-    container?.appendChild(button);
-    button.click();
+  openViewDialog(member: Member): void {
+    const dialogRef = this.dialog.open(ViewMemberComponent, {
+      data: member,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        member = result;
+      }
+    });
   }
 
-  public getSex(sexe:SEXE):string {
-    switch(sexe){
-      case SEXE.M: return 'Masculin';
-      break;
-      case SEXE.F: return 'Feminin';
-      break; 
-    };
+  openViewTestDialog(member: Member): void {
+    const dialogRef = this.dialog.open(ViewTestComponent, {
+      data: member,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        member = result;
+      }
+    });
   }
 }

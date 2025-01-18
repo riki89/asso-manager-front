@@ -1,6 +1,6 @@
 <div class="container" id="main-container">
     <div class="content contact-list">
-        <div *ngIf="membersList" class="card card-default">
+        <div *ngIf="membersList$ | async as membersList; else noMember" class="card card-default">
             <div class="card-header align-items-center px-3 px-md-5">
                 <h2> Liste des membres</h2>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMemberModal">Ajouter un membre</button>
@@ -9,10 +9,10 @@
                 <div class="row">
                     <div *ngFor="let member of membersList" class="col-lg-6 col-xl-4 col-md-6 col-sm-12">
                         <div class="card card-default p-4">
-                            <a href="javascript:0" class="media text-secondary" data-bs-target="modal" (click)="onOpenModal(member, 'read')">
+                            <a href="javascript:0" class="media text-secondary" data-bs-target="modal" (click)="openViewTestDialog(member)">
                                 <div [ngSwitch]="member?.sex">
-                                    <img *ngSwitchCase="sexM[0]" src="/assets/img/m.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
-                                    <img *ngSwitchCase="sexF[0]" src="/assets/img/f.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                    <img *ngSwitchCase="'M'" src="/assets/img/m.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
+                                    <img *ngSwitchCase="'F'" src="/assets/img/f.png" class="mr-3 img-fluid rounded" alt="Avatar Image"/>
                                 </div>
                                 <div class="media-body text-center">
                                     <h5 class="mt-0 mb-2 text-dark">{{member.firstName}} {{member.lastName}}</h5>
@@ -20,8 +20,9 @@
                             </a>
                             <div class="card-body text-center">
                                 <div class="float-right btn-group btn-group-sm">
-                                <a (click)="onOpenModal(member, 'edit')" class="btn btn-primary tooltips" data-bs-placement="top" title="Edit"><i class="fa fa-pencil"></i> </a>
-                                <a (click)="onOpenModal(member, 'delete')" class="btn btn-secondary tooltips" data-bs-placement="top" title="Delete"><i class="fa fa-times"></i></a>
+                                <!-- <a (click)="onOpenModal(member, 'edit')" class="btn btn-primary tooltips" data-bs-placement="top" title="Edit"><i class="fa fa-pencil"></i> </a> -->
+                                <a (click)="openEditDialog(member)" class="btn btn-primary tooltips" data-bs-placement="top" title="Edit"><i class="fa fa-pencil"></i> </a>
+                                <!-- <a (click)="onOpenModal(member, 'delete')" class="btn btn-secondary tooltips" data-bs-placement="top" title="Delete"><i class="fa fa-times"></i></a> -->
                                 </div>
                             </div>
                         </div>
@@ -31,85 +32,7 @@
         </div>
     </div>
 
-     <!-- Edit Modal -->
-     <div class="modal fade" id="updateMemberModal" tabindex="-1" role="dialog" aria-labelledby="memberEditModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateMemberModalLabel">Modifier membre: {{editMember?.firstName}} {{editMember?.lastName}}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form #editForm="ngForm">
-                        <input type="hidden" ngModel="{{editMember?.id}}" name="id" class="form-control" id="id" placeholder="ID">
-                        <div class="form-group">
-                            <label for="phone">Prenom</label>
-                            <input type="text" ngModel="{{editMember?.firstName}}" name="firstName" class="form-control" id="firstName" placeholder="Prenom" required>
-                        </div>
-                        <div>
-                            <label for="date">Nom</label>
-                            <input type="text" ngModel="{{editMember?.lastName}}" name="lastName" class="form-control" id="lastName" placeholder="Nom" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lieu">Telephone</label> 
-                            <input type="text" ngModel="{{editMember?.phoneNumber}}" name="phoneNumber" class="form-control" id="phoneNumber" placeholder="Telephone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lieu">Sexe</label> 
-                            <select ngModel="{{editMember?.sex}}" name="sex" class="form-select" aria-label="Default select example" required>
-                                <option value="M">Masculin</option>
-                                <option value="F">Feminin</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="lieu">Type</label> 
-                            <select ngModel="{{editMember?.type}}" name="type" class="form-select" aria-label="Default select example" required>
-                                <option *ngFor="let tp of typeTypes"
-                                        [value]="tp">
-                                    {{TypeMapping[tp]}}
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="lieu">Fonction</label>
-                            <select ngModel="{{editMember?.function}}" name="function" class="form-select" aria-label="Default select example">
-                                <option [value]="-1">--Choisir--</option>
-                                <option *ngFor="let fonction of fonctionTypes"
-                                        [value]="fonction">
-                                    {{FonctionMapping[fonction]}}
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="lieu">Date d'adhesion: {{editMember?.joinDate}}</label> 
-                            <input type="datetime-local" ngModel="{{editMember?.joinDate}}" name="joinDate" class="form-control" id="joinDate" placeholder="Date d'adhesion" required>
-                        </div>
-                        <div>
-                            <label for="lieu">A une carte membre?</label> 
-                            <div class="form-check">
-                                <input ngModel="{{editMember?.memberCard}}" class="form-check-input" type="radio" name="memberCard" value="true" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">oui</label>
-                            </div>
-                            <div class="form-check">
-                                <input ngModel="{{editMember?.memberCard}}" class="form-check-input" type="radio" name="memberCard" value="false" id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2">Non</label>
-                            </div>
-                        </div>    
-                        <!-- <div class="form-group">
-                        <label for="phone">Image URL</label>
-                        <input type="text" ngModel="{{editMember?.date}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
-                        </div> -->
-                        <div class="modal-footer">
-                            <button type="button" id="" data-bs-dismiss="modal" class="btn btn-secondary">Fermer</button>
-                            <button  (click)="onUpdateMember(editForm.value)" data-bs-dismiss="modal" class="btn btn-primary" >Enregistrer</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     
     <!-- Add member Modal -->
     <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
@@ -208,10 +131,10 @@
                     <div class="contact-info px-4">
                         <!-- <img src="https://www.bootdey.com/image/280x120/6495ED/000000" class="card-img-top img-fluid" alt=""> -->
                         <a href="#!.html" class="avatar xl rounded-circle bg-gray bg-opacity-10 p-1 position-relative mt-n5 d-block mx-auto">
-                            <!-- <img src="./assets/img/readMember?sex.png" class="avatar-img img-fluid rounded-circle" alt=""> -->
+                            <!-- <img src="./assets/img/readMembersex.png" class="avatar-img img-fluid rounded-circle" alt=""> -->
                             <div [ngSwitch]="readMember?.sex">
-                                <img *ngSwitchCase="sexM[0]" src="/assets/img/m.png" class="avatar-img img-fluid rounded-circle" alt="Avatar Image"/>
-                                <img *ngSwitchCase="sexF[0]" src="/assets/img/f.png" class="avatar-img img-fluid rounded-circle" alt="Avatar Image"/>
+                                <img *ngSwitchCase="'M'" src="/assets/img/m.png" class="avatar-img img-fluid rounded-circle" alt="Avatar Image"/>
+                                <img *ngSwitchCase="'F'" src="/assets/img/f.png" class="avatar-img img-fluid rounded-circle" alt="Avatar Image"/>
                             </div>
                         </a>
                           <h5 class="mb-0 pt-3">
@@ -222,8 +145,8 @@
                         <!-- <p class="text-dark font-weight-medium pt-4 mb-2">Prenom: {{readMember?.firstName}}</p> -->
                         <!-- <p class="text-dark font-weight-medium pt-4 mb-2">Nom: {{readMember?.lastName}}</p> -->
                         <p class="text-dark font-weight-medium pt-4 mb-2">Telephone: {{readMember?.phoneNumber}}</p>
-                        <p class="text-dark font-weight-medium pt-4 mb-2" *ngIf="readMember?.sex == sexF[0]">Sexe: {{SexType.F}}</p>
-                        <p class="text-dark font-weight-medium pt-4 mb-2" *ngIf="readMember?.sex == sexM[0]">Sexe: {{SexType.M}}</p>
+                        <p class="text-dark font-weight-medium pt-4 mb-2" *ngIf="readMember?.sex == sexF">Sexe: Feminin </p>
+                        <p class="text-dark font-weight-medium pt-4 mb-2" *ngIf="readMember?.sex == sexM">Sexe: Masculin</p>
                         <!-- <div [ngSwitch]="readMember?.type">
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Type.simple">Type: {{TypeMapping.simple}}</p>
                             <p class="text-dark font-weight-medium pt-4 mb-2" *ngSwitchCase="Type.bureau">Type: {{TypeMapping.bureau}}</p>
@@ -270,14 +193,10 @@
             </div>
         </div>
     </div>
-    
-    <!-- Notification for no memberes -->
-    <div *ngIf="membersList?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
-        <div class="alert alert-info" role="alert">
-            <h4 class="alert-heading">NO Member!</h4>
-                <p>Aucun member trouve.</p>
-        
-        </div>
-    </div>
+
+    <ng-template #noMember>
+        No Member!
+        <mat-spinner></mat-spinner>
+    </ng-template>
 
 </div>
